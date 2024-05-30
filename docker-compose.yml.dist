@@ -1,0 +1,63 @@
+version: '2'
+services:
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+      args:
+        - INSTALL_XDEBUG=true
+        - XDEBUG_REMOTE_HOST=172.19.0.1
+        - XDEBUG_REMOTE_PORT=9000
+        - XDEBUG_IDE_KEY=tlt
+    external_links:
+      - memcached:memcached
+      - db:db
+    volumes:
+      - ./laravel:/home/george/Public/Projects/tlt/tlt-backend/laravel
+    container_name: tlt-php
+    ports:
+      - "9006:9001"
+    networks:
+      - local
+    working_dir: /home/george/Public/Projects/tlt/tlt-backend/laravel
+    restart: unless-stopped
+    expose:
+      - "9000"
+
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php-fpm:php
+    volumes:
+      - ./logs/nginx/:/var/log/nginx
+      - ./laravel:/home/george/Public/Projects/tlt/tlt-backend/laravel
+    container_name: tlt-nginx
+    networks:
+      - local
+
+  memcached:
+    image: memcached
+    container_name: tlt-memcached
+    ports:
+      - "11212:11211"
+    networks:
+      - local
+
+  db:
+    image: "mariadb:10.3"
+    container_name: tlt-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=tlt
+      - MYSQL_DATABASE=tlt
+      - MYSQL_USER=tlt
+      - MYSQL_PASSWORD=tlt
+    ports:
+      - "3307:3306"
+    networks:
+      - local
+
+networks:
+  local:
+    external: true

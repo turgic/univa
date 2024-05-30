@@ -1,0 +1,49 @@
+version: '2'
+services:
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+    external_links:
+      - db:db
+    volumes:
+      - ./symfony:/home/george/Public/Projects/univa/symfony
+    container_name: univa-php
+    ports:
+      - "9006:9001"
+    networks:
+      - local
+    working_dir: /home/george/Public/Projects/univa/symfony
+    restart: unless-stopped
+    expose:
+      - "9000"
+
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php-fpm:php
+    volumes:
+      - ./logs/nginx/:/var/log/nginx
+      - ./symfony:/home/george/Public/Projects/univa/symfony
+    container_name: univa-nginx
+    networks:
+      - local
+
+  db:
+    image: mariadb:10
+    container_name: univa-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=univa
+      - MYSQL_DATABASE=univa
+      - MYSQL_USER=univa
+      - MYSQL_PASSWORD=univa
+    ports:
+      - "3307:3306"
+    networks:
+      - local
+
+networks:
+  local:
+    external: true
