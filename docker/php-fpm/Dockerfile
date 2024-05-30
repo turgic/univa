@@ -2,13 +2,6 @@ FROM php:8.3-fpm
 MAINTAINER George Turetchi
 
 ENV DEBIAN_FRONTEND noninteractive
-#Xdebug env variables
-ARG XDEBUG_REMOTE_HOST
-ARG XDEBUG_REMOTE_PORT
-ARG XDEBUG_IDE_KEY
-ENV XDEBUG_REMOTE_HOST ${XDEBUG_REMOTE_HOST}
-ENV XDEBUG_REMOTE_PORT ${XDEBUG_REMOTE_PORT}
-ENV XDEBUG_IDE_KEY ${XDEBUG_IDE_KEY}
 
 # ------------------------------
 # install usefull binaries
