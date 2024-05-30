@@ -2,3 +2,4 @@
 docker-compose.yml
 /logs
 symfony/vendor
+docker/nginx/symfony.conf
