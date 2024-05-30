@@ -14,7 +14,7 @@ ADD start.sh /usr/local/bin/
 RUN chmod a+x /usr/local/bin/start.sh
 ADD nginx.conf /etc/nginx/
 ADD default.conf /etc/nginx/sites-enabled/
-ADD laravel.conf /etc/nginx/sites-enabled/
+ADD symfony.conf /etc/nginx/sites-enabled/
 ADD reverse.conf /etc/nginx/conf.d/
 
 
