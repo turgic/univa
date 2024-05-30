@@ -57,7 +57,6 @@ class UserControllerTest extends WebTestCase
                 'password' => 'user',
             ])
         );
-        dump($client->getResponse()->getStatusCode());die();
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 }
