@@ -37,7 +37,6 @@ RUN chmod +x /usr/local/bin/start.sh
 
 
 # Perform the composer update
-#WORKDIR /Users/gturetchi/Documents/Projects/frinteza/laravel
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \

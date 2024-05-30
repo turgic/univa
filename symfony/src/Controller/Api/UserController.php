@@ -16,8 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     public function __construct(
-        private readonly UserDataService $userDataService,
-        private readonly UserValidator $userValidator
+        private UserDataService $userDataService,
+        private UserValidator $userValidator
     ) {
 
     }
@@ -28,7 +28,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/api/users/new', name: 'api_user_new', methods: ['POST'])]
+    #[Route('/api/users', name: 'api_user_new', methods: ['POST'])]
     public function new(
         Request $request,
     ): Response {
